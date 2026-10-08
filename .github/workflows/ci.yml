@@ -1,8 +1,8 @@
 name: FastAPI CI
 
 on:
-  push
-  pull_request
+  push:
+  pull_request:
 
 permissions:
   contents: read
@@ -44,4 +44,4 @@ jobs:
           app_final.py
           requirements.txt
           README.md
-        retention-days: 
+        retention-days: 7
