@@ -1,12 +1,12 @@
 import pytest
 from fastapi.testclient import TestClient
-from app import app
+from app_final import app
 
 client = TestClient(app)
 
 @pytest.fixture(autouse=True)
 def load_test_data():
-    from app import books_db 
+    from app_final import books_db 
     books_db[:] = [  
         {"id": 1, "title": "Мастер и Маргарита", "author": "Михаил Булгаков"},
         {"id": 2, "title": "Война и мир", "author": "Лев Толстой"}
