@@ -3,6 +3,14 @@ from app_final import app
 
 client = TestClient(app)
 
+@pytest.fixture(autouse=True)
+def load_test_data():
+    from .app import books_db  # Или откуда лежит ваш основной файл
+    books_db[:] = [  
+        {"id": 1, "title": "Мастер и Маргарита", "author": "Михаил Булгаков"},
+        {"id": 2, "title": "Война и мир", "author": "Лев Толстой"}
+    ]
+    
 def test_health():
     response = client.get("/health")
     assert response.status_code == 200
