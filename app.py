@@ -12,6 +12,10 @@ app = FastAPI(title="Book Catalog Service")
 def health():
     return {"status": "ok"}
 
+@app.get("/version")
+def version():
+    return {"version": "1.0.0"}
+
 books_db = [
     {"id": 1, "title": "Мастер и Маргарита", "author": "Михаил Булгаков"},
     {"id": 2, "title": "Война и мир", "author": "Лев Толстой"},
