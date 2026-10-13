@@ -1,27 +1,52 @@
 """Учебная заготовка: этот файл заполняем вместе на занятии."""
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException 
+import os
 
+from dotenv import load_dotenv
+load_dotenv()
 
-app = FastAPI(title="Наш первый сервис")
+app = FastAPI(title="Book Catalog Service")
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
-# Шаг 1. Добавьте обработчик адреса /
-# Подсказка:
-# @app.get("/")
-# def root():
-#     return {"message": "Сервис работает"}
+books_db = [
+    {"id": 1, "title": "Мастер и Маргарита", "author": "Михаил Булгаков"},
+    {"id": 2, "title": "Война и мир", "author": "Лев Толстой"},
+]
 
+@app.get("/books")
+def get_books():
+    print("[LOG] Запрошен список всех книг")
+    return {"books": books_db}
 
-# Шаг 2. Добавьте техническую проверку /health
-# Она должна возвращать: {"status": "ok"}
+@app.get("/books/{book_id}")
+def get_book(book_id: int):
+    print(f"[LOG] Запрошена книга с ID {book_id}")
 
+    for book in books_db:
+        if book["id"] == book_id:
+            return book
 
-# Шаг 3. Добавьте /hello с параметром name
-# Пример запроса: /hello?name=Anna
-# Пример ответа: {"message": "Привет, Anna!"}
+    raise HTTPException(status_code=404, detail=f"Книга с id {book_id} не найдена.")
 
+@app.get("/books/author/")
+def search_by_author(author: str):
+    print(f"[LOG] Поиск книг автора: {author}")
+    result = [book for book in books_db if author.lower() in book["author"].lower()]
+    return {"author": author, "books": result}
 
-# Шаг 4. Прочитайте APP_NAME и APP_AUTHOR из переменных окружения
-# и верните их по адресу /info.
+@app.get("/info")
+def info():
+    app_name = os.getenv("APP_NAME", "Default Book Service")
+    author = os.getenv("APP_AUTHOR", "Не указан")
+    version = os.getenv("APP_VERSION", "1.0.0")
+
+    return {
+        "service": app_name,
+        "version": version,
+        "author": author,
+    }
 
