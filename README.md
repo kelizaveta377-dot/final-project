@@ -22,7 +22,7 @@ bash pip install pytest httpx
 1. ./run.sh
 2. Команда запуска без флага --reload для обычной работы приложения
 
-uvicorn main:app --host 127.0.0.1 --port 8000
+uvicorn app:app --reload
 
 Переменные окружения используемые в сервисе
 
