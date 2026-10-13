@@ -21,7 +21,7 @@ pip install pytest httpx
 
 1.Команда запуска без флага --reload для обычной работы приложения
 
-uvicorn app:app --reload
+uvicorn app_final.py:app --reload
 
 Переменные окружения используемые в сервисе
 
