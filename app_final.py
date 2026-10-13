@@ -1,5 +1,3 @@
-"""Учебная заготовка: этот файл заполняем вместе на занятии."""
-
 from fastapi import FastAPI, HTTPException 
 import os
 
