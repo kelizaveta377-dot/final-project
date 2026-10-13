@@ -5,7 +5,7 @@ client = TestClient(app)
 
 @pytest.fixture(autouse=True)
 def load_test_data():
-    from .app import books_db  # Или откуда лежит ваш основной файл
+    from app_final import books_db 
     books_db[:] = [  
         {"id": 1, "title": "Мастер и Маргарита", "author": "Михаил Булгаков"},
         {"id": 2, "title": "Война и мир", "author": "Лев Толстой"}
